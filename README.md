@@ -30,6 +30,8 @@ $editable->select('job', null, [
 echo $editable->render()->getBody();
 ```
 
+To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/master/test/Editable.php
+
 ![demo.png](https://i.loli.net/2017/11/08/5a02eda96db8b.png)
 
 
@@ -44,6 +46,10 @@ echo $editable->render()->getBody();
      - js/css assets local support.
      - datetime support
      - WYSIWYG support
+     - PHP Saver
+     - Multiple line
+     - Async sencondary ajax request source support for select and typeahead
+     - File uplaod and preview
 
 
 ## License
