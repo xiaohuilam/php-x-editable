@@ -1,0 +1,21 @@
+{
+    "name": "diana/php-x-editable",
+    "description": "Maybe the best x-editable plugin for PHP",
+    "type": "library",
+    "require": {
+        "php": ">5.3",
+        "psr/http-message": "1.*",
+        "avplab/php-html-builder": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {"name": "xiaohui lam", "email": "xiaohui.lam@e.hexdata.cn"}
+    ],
+    "autoload": {
+        "psr-4": {
+            "Editable\\": "src/",
+            "Editable\\Test\\": "test/"
+        }
+    },
+    "minimum-stability": "dev"
+}
