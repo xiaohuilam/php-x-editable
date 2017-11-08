@@ -15,9 +15,20 @@ class Editable implements interfaces\EditableInterface{
      * 上面已声明的各种第三方库
      */
     protected $vendor_assets = [
-        'typeahead'     => [
-            'css'   => [],
-            'js'    => [],
+        'text'          => ['css' => [], 'js' => []],
+        'select'        => ['css' => [], 'js' => []],
+        'textarea'      => ['css' => [], 'js' => []],
+        'date'          => ['css' => [], 'js' => []],
+        'datetime'      => ['css' => [], 'js' => []],
+        'typeaheadjs'     => [
+            'css'   => [
+                'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.min.css',
+            ],
+            'js'    => [
+                'https://cdn.jsdelivr.net/gh/twitter/typeahead.js@0.11.1/dist/typeahead.jquery.min.js',
+                'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/inputs-ext/typeaheadjs/lib/typeahead.min.js',
+                'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/inputs-ext/typeaheadjs/typeaheadjs.min.js'
+            ],
         ],
         'tag'           => [
             'css'   => [],
@@ -160,9 +171,14 @@ class Editable implements interfaces\EditableInterface{
      * @param  array  $options 可供选择的项 ['显示文字1'=>1, '显示文字2'=>2]
      * @return self
      */
-    public function typeahead($key, $value = null, array $options = [])
+    public function typeaheadjs($key, $value = null, array $options = [])
     {
         return $this->registerComponent(__FUNCTION__, $key, $value, $options);
+    }
+
+    public function typeahead($key, $value = null, array $options = [])
+    {
+        return $this->typeaheadjs($key, $value, $options);
     }
 
     /**
@@ -204,6 +220,11 @@ class Editable implements interfaces\EditableInterface{
         $builder->div()->setClass('table-wrapper')->setId('table-wrapper-'.$uuid);
         /**/$builder->link()->setRel('stylesheet')->setHref('https://cdn.jsdelivr.net/gh/twbs/bootstrap@3.3.5/dist/css/bootstrap.min.css')->end();
         /**/$builder->link()->setRel('stylesheet')->setHref('https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/bootstrap3-editable/css/bootstrap-editable.min.css')->end();
+        foreach($this->existed_dom_type as $dom_type => $one) {
+            foreach($this->vendor_assets[$dom_type]['css'] as $css) {
+        /**/$builder->link()->setRel('stylesheet')->setHref($css)->end();
+            }
+        }
         /**/$builder->table()->setClass('table table-bordered table-striped');
         /**//**/$builder->thead();
         /**//**//**/$builder->tr();
@@ -251,6 +272,13 @@ class Editable implements interfaces\EditableInterface{
             /**//**//**//**//**/->setClass('editable-link');
             /**//**//**//**//**/if($type == 'select' || $type == 'tag') {
             /**//**//**//**//**//**/$builder->setDataSource(json_encode($component[3]));
+            /**//**//**//**//**/}else if($type == 'typeaheadjs') {
+            /**//**//**//**//**//**/$builder->setDataTypeahead( # @todo: template
+            /**//**//**//**//**//**//**/json_encode([
+            /**//**//**//**//**//**//**/'name' => $key,
+            /**//**//**//**//**//**//**/'local' => $component[3],
+            /**//**//**//**//**//**//**/])
+            /**//**//**//**//**//**/);
             /**//**//**//**//**/}
             /**//**//**//**/$builder->end();
             /**//**//**/$builder->end();
@@ -263,6 +291,11 @@ class Editable implements interfaces\EditableInterface{
         /**/$builder->script()->setType('application/javascript')->setSrc('https://cdn.jsdelivr.net/npm/jquery@1.12.1/dist/jquery.min.js')->end();
         /**/$builder->script()->setType('application/javascript')->setSrc('https://cdn.jsdelivr.net/gh/twbs/bootstrap@3.3.5/dist/js/bootstrap.min.js')->end();
         /**/$builder->script()->setType('application/javascript')->setSrc('https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/bootstrap3-editable/js/bootstrap-editable.min.js')->end();
+        foreach($this->existed_dom_type as $dom_type => $one) {
+            foreach($this->vendor_assets[$dom_type]['js'] as $js) {
+        /**/$builder->script()->setType('application/javascript')->setSrc($js)->end();
+            }
+        }
         /**/$builder->script('$("#table-wrapper-'.$uuid.' .editable-link").editable()')->setType('application/javascript')->end();
         $builder->end();
 
