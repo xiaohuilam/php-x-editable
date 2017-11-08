@@ -12,27 +12,36 @@ composer require diana/php-x-editable:"v0.01" -vvv
 ## 使用
 
 ```php
-use Editable\Editable;
-$editable = new Editable([
-    'id'            => 12,
-    'name'          => '张君宝',
-    'home'          => '武当山',
-    'job'           => '1',
-    'created_at'    => date('Y-m-d H:i:s'),
-], 'id', [], 'test.php?action=save'); // 第一个参数是需要编辑的数据，第二个参数是主键的名称，第三个参数是保护参数，第四个参数是AJAX的URL
-
+<?php
+$editable = new \Editable\Editable(
+    [
+        'id'            => 12,
+        'name'          => '张君宝',
+        'home'          => '武当山',
+        'job'           => 2,
+        'created_at'    => date('Y-m-d H:i:s'),
+    ], 
+    'id', 
+    ['id', 'created_at'], 
+    'test.php?action=save'
+);
+$editable->typeahead('home', null, [
+      ['value' => '武当山', 'tokens' => '武当山'],
+      ['value' => '华山', 'tokens' => '华山'],
+      ['value' => '峨眉山', 'tokens' => '峨眉山']
+], 0);
 $editable->select('job', null, [
       ['value' => 1, 'text' => '一代弱鸡'],
       ['value' => 2, 'text' => '一代宗师'],
       ['value' => 3, 'text' => '一代刺客']
-], 0); // 特殊声明一下job这个字段要用select框来选择
-
+], 0);
 echo $editable->render()->getBody(); // PSR-7，所以要用getBody来获取HTML
 ```
 
 完整的DEMO例子请见 https://github.com/xiaohuilam/php-x-editable/blob/master/test/Editable.php
 
-![demo.png](https://i.loli.net/2017/11/08/5a02eda96db8b.png)
+![demo_basic.png](https://i.loli.net/2017/11/08/5a02eda96db8b.png)
+![demo_typeahead.png](https://i.loli.net/2017/11/08/5a030b7c4b6ad.png)
 
 
 ## Features and TODO
