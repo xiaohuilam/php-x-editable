@@ -40,8 +40,13 @@ echo $editable->render()->getBody();
 
 To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/master/test/Editable.php
 
-![demo_basic.png](https://i.loli.net/2017/11/08/5a02eda96db8b.png)
-![demo_typeahead.png](https://i.loli.net/2017/11/08/5a030b7c4b6ad.png)
+![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png)
+![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png)
+![3.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png)
+![5.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png)
+![4.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png)
+![6.png](https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png)
+![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png)
 
 
 ## Features and TODO
