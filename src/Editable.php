@@ -25,7 +25,6 @@ class Editable implements interfaces\EditableInterface{
                 'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.min.css',
             ],
             'js'    => [
-                'https://cdn.jsdelivr.net/gh/twitter/typeahead.js@0.11.1/dist/typeahead.jquery.min.js',
                 'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/inputs-ext/typeaheadjs/lib/typeahead.min.js',
                 'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/inputs-ext/typeaheadjs/typeaheadjs.min.js'
             ],
@@ -56,7 +55,7 @@ class Editable implements interfaces\EditableInterface{
      * @param  array                $hidden 保护字段
      * @param  string               $ajax   AJAX保存URL
      */
-    public function __construct($row = null, string $pk = 'id', array $hidden = [], $ajax = '')
+    public function __construct($row = null, string $pk = "id", array $hidden = [], $ajax = '')
     {
         if(!$row)
             throw new EditableException(null, EditableException::NO_DATA);
@@ -257,6 +256,15 @@ class Editable implements interfaces\EditableInterface{
                         break;
                     }
                 }
+            }else if($type == 'typeaheadjs') {
+                $show_value = '';
+                foreach($component[3] as $option) {
+                    $option_value = isset($option['value']) ? $option['value']: null;
+                    if($value == $option_value) {
+                        $show_value = $option['tokens'] . ' (' . $value . ') ';
+                        break;
+                    }
+                }
             }
 
             /**//**/$builder->tr();
@@ -296,7 +304,40 @@ class Editable implements interfaces\EditableInterface{
         /**/$builder->script()->setType('application/javascript')->setSrc($js)->end();
             }
         }
-        /**/$builder->script('$("#table-wrapper-'.$uuid.' .editable-link").editable()')->setType('application/javascript')->end();
+        /**/$builder->script(
+                <<<JAVASCRIPT
+                $("#table-wrapper-$uuid .editable-link").each(function(){
+                    var self = this;
+                    $(self).editable({
+                        typeahead: (function(a){
+                            try{
+                                if(!$(self).attr('data-typeahead')) return null;
+                                opt = $.parseJSON($(self).attr('data-typeahead')) ? $.extend($(self).data('typeahead'), {
+                                    template: function(item) {
+                                        return item.tokens + ' (' + item.value + ') ';
+                                    }
+                                }) : null;
+                                return opt;
+                            }catch(e){console.error(e)}
+                        })(self)
+                    }).on('save', function(e, params){
+                        try{
+                            if(!$(self).attr('data-typeahead')) return null;
+                            if($.parseJSON($(self).attr('data-typeahead'))){
+                                var local = $(self).data('typeahead').local;
+                                for(i in local) {
+                                    var item = local[i];
+                                    if(item.value == params.submitValue) {
+                                        setTimeout(function(){ $(self).text(item.tokens + ' (' + item.value + ') '); }, 100);
+                                        break;
+                                    }
+                                }
+                            }
+                        }catch(e){console.error(e)}
+                    });
+                });
+JAVASCRIPT
+)->setType('application/javascript')->end();
         $builder->end();
 
         $html = (string) $builder;

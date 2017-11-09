@@ -7,7 +7,7 @@ class Editable{
             [
                 'id'            => 12,
                 'name'          => '张君宝',
-                'home'          => '武当山',
+                'home'          => 1,
                 'job'           => 2,
                 'created_at'    => date('Y-m-d H:i:s'),
             ], 
@@ -17,9 +17,9 @@ class Editable{
         );
 
         $editable->typeahead('home', null, [
-              ['value' => '武当山', 'tokens' => '武当山'],
-              ['value' => '华山', 'tokens' => '华山'],
-              ['value' => '峨眉山', 'tokens' => '峨眉山']
+              ['value' => '1', 'tokens' => '武当山'],
+              ['value' => '2', 'tokens' => '华山'],
+              ['value' => '3', 'tokens' => '峨眉山']
         ], 0);
 
         $editable->select('job', null, [
