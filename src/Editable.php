@@ -363,6 +363,8 @@ class Editable implements interfaces\EditableInterface{
         }
         /**/$builder->script(
                 <<<JAVASCRIPT
+                $.fn.combodate.defaults.maxYear = (new Date).getFullYear();
+
                 $("#table-wrapper-$uuid .editable-link").each(function(){
                     var self = this;
                     $(self).editable({
@@ -379,6 +381,9 @@ class Editable implements interfaces\EditableInterface{
                             }catch(e){console.error(e)}
                         })(self),
                         display: (function(self){
+                            if($(self).data('type') == 'combodate') {
+                                return null;
+                            }
                             if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {
                                 return null;
                             }
