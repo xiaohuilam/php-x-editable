@@ -50,15 +50,15 @@ echo $editable->render()->getBody(); // PSR-7，所以要用getBody来获取HTML
      - text 
      - select 
      - tag
+     - datetime
+     - wysiwyg
 
  - TODO
-     - js/css assets local support.
-     - datetime support
-     - WYSIWYG support
-     - 保存的自动化、
-     - 多行编辑
-     - 二次异步加载（针对select和typeahead）
-     - 文件上传和预览支持
+     - jscss本地存储       目前用的是JSDelivr，我计划是开个新包，比如diana/local-x-editable-assets
+     - 保存的自动化         就是你不用写保存的代码，因为你在读取时候已经写了所必要的信息
+     - 多行编辑             一次编辑多行数据，考虑和datatables插件做支持
+     - 二次异步加载         select和typeahead的下拉数据，做AJAX加载的支持
+     - 文件上传和预览支持    x-editable是不支持上传文件的，我打算支持他
 
 
 ## 授权
@@ -66,5 +66,3 @@ echo $editable->render()->getBody(); // PSR-7，所以要用getBody来获取HTML
 ```
 MIT
 ```
-
- 链接 [Github](https://github.com/xiaohuilam/php-x-editable)

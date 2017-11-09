@@ -41,8 +41,13 @@ class Editable implements interfaces\EditableInterface{
             ],
         ],
         'tag'           => [
-            'css'   => [],
-            'js'    => [],
+            'css'   => [
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2.css',
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2-bootstrap.css',
+            ],
+            'js'    => [
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2.js',
+            ],
         ],
         'wysiwyg'       => [
             'css'   => [
@@ -278,6 +283,7 @@ class Editable implements interfaces\EditableInterface{
                 return $a;
             }, $key));
             $title  = 'Type the '.$show_name;
+            $show_type = $type;
 
             $show_value = $value;
             if($type == 'select') {
@@ -298,7 +304,12 @@ class Editable implements interfaces\EditableInterface{
                         break;
                     }
                 }
+            }else if($type == 'wysiwyg') {
+                $show_type = 'wysihtml5';
+            }else if($type == 'tag') {
+                $show_type = 'select2';
             }
+
 
             /**//**/$builder->tr();
             /**//**//**/$builder->td($show_name)->end();
@@ -308,7 +319,7 @@ class Editable implements interfaces\EditableInterface{
             /**//**//**//**//**/->setDataPk($this->pk)
             /**//**//**//**//**/->setDataUrl($this->ajax)
             /**//**//**//**//**/->setDataTitle($title)
-            /**//**//**//**//**/->setDataType($type)
+            /**//**//**//**//**/->setDataType($show_type)
             /**//**//**//**//**/->setDataValue($value)
             /**//**//**//**//**/->setDataPlacement('bottom');
             /**//**//**//**//**/if(!isset($this->hidden[$key])) {
@@ -333,8 +344,6 @@ class Editable implements interfaces\EditableInterface{
             /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD HH:mm:ss')
             /**//**//**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD HH:mm:ss')
             /**//**//**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD HH:mm:ss');
-            /**//**//**//**//**/}else if($type == 'wysiwyg') {
-            /**//**//**//**//**//**/$builder->setDataType('wysihtml5');
             /**//**//**//**//**/}
             /**//**//**//**/$builder->end();
             /**//**//**/$builder->end();
@@ -383,19 +392,29 @@ class Editable implements interfaces\EditableInterface{
                                 var shown = '';
                                 for(var i = 0; i < arg_value.length; i++){
                                     var value = arg_value[i];
-                                    if(!options || 'undefined' == typeof options || 'object' !== typeof options || 'undefined' == typeof options.length)
-                                        return shown += value;
+                                    if(!options || 'undefined' == typeof options || 'object' !== typeof options || 'undefined' == typeof options.length) {
+                                        shown += value;
+                                        if(i <arg_value.length - 1)shown += ",\\r\\n";
+                                        continue;
+                                    }
 
-                                    elem = $.grep(options, function(o){return o.value == value;});
-                                    if(elem.length) {
+                                    var elem = $.grep(options, function(o){return o.value == value;});
+                                    if('undefined' != typeof elem && 'undefined' != typeof elem.length && elem.length) {
                                         shown += elem[0].text; 
+                                        if(i <arg_value.length - 1)shown += ",\\r\\n";
                                     } else {   
                                     }
-                                    shown += "\\r\\n";
                                 }
                                 $(self).empty();
-                                return $(self).text(shown);
-                            }
+                                return $(self).html(shown);
+                            };
+                        })(self),
+                        select2: (function(self){
+                            if($(self).data('type') != 'select2') return null;
+                            return {
+                                tags: $(self).data('source'),
+                                tokenSeparators: [",", " "]
+                            };
                         })(self)
                     });
                     if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {

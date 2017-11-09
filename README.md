@@ -50,15 +50,16 @@ To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/master/
      - text 
      - select 
      - tag
+     - datetime
+     - wysiwyg
 
  - TODO
-     - js/css assets local support.
-     - datetime support
-     - WYSIWYG support
-     - PHP Saver
-     - Multiple line
-     - Async sencondary ajax request source support for select and typeahead
-     - File uplaod and preview
+     - jscss Self Hosted   to host js and css by another package `diana/local-x-editable-assets`
+     - Auto saver          re-use your data reading code, avoid code again.
+     - Multiple rows       multiple rows data editing
+     - Async source        select/typeahead's ajax remote source support
+     - File upload         x-editable is not support file uploading natively, until us.
+
 
 
 ## License
