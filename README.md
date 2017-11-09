@@ -5,7 +5,7 @@ Maybe the best X-Editable PHP plugin of the world
 ## Install
 
 ```
-composer require diana/php-x-editable:"v0.01" -vvv
+composer require diana/php-x-editable -vvv
 ```
 
 

@@ -5,7 +5,7 @@
 ## 安装
 
 ```
-composer require diana/php-x-editable:"v0.01" -vvv
+composer require diana/php-x-editable -vvv
 ```
 
 
