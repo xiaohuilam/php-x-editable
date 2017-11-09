@@ -13,7 +13,7 @@ class Editable{
                 'created_at'    => date('Y-m-d H:i:s'),
             ], 
             'id', 
-            ['id', 'created_at'], 
+            [], 
             'test.php?action=save'
         );
 

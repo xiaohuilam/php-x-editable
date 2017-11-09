@@ -78,8 +78,11 @@ class Editable implements interfaces\EditableInterface{
 
         $this->row      = $row;
         $this->pk       = $this->row[$pk] ?? null;
-        $this->hidden   = $hidden;
+        $this->hidden   = array_flip($hidden);
         $this->ajax     = $ajax;
+
+        $this->hidden[$pk]   = 1;
+
         foreach($this->row as $key => $value)
             $this->input($key, $value);
     }
@@ -110,7 +113,6 @@ class Editable implements interfaces\EditableInterface{
         $this->hidden[$key] = 1;
         return $this;
     }
-    
 
     /**
      * 输入框
@@ -292,8 +294,10 @@ class Editable implements interfaces\EditableInterface{
             /**//**//**//**//**/->setDataUrl($this->ajax)
             /**//**//**//**//**/->setDataTitle($title)
             /**//**//**//**//**/->setDataType($type)
-            /**//**//**//**//**/->setDataValue($value)
-            /**//**//**//**//**/->setClass('editable-link');
+            /**//**//**//**//**/->setDataValue($value);
+            /**//**//**//**//**/if(!isset($this->hidden[$key])) {
+            /**//**//**//**//**//**/$builder->setClass('editable-link');
+            /**//**//**//**//**/}
             /**//**//**//**//**/if($type == 'select' || $type == 'tag') {
             /**//**//**//**//**//**/$builder->setDataSource(json_encode($component[3]));
             /**//**//**//**//**/}else if($type == 'typeaheadjs') {
