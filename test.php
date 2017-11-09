@@ -13,9 +13,6 @@ if('save' == ($_GET['action'] ?? null)) {
 <body>
 	<div class="col-md-6 col-md-offset-3">
 	<h1>PHP Editable Demo</h1>
-	<h1>Line Break</h1>
-	<h1>Line Break</h1>
-	<h1>Line Break</h1>
 	<?php
 		Editable\Test\Editable::test();
 	?>

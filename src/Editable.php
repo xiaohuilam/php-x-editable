@@ -17,6 +17,7 @@ class Editable implements interfaces\EditableInterface{
     protected $vendor_assets = [
         'text'          => ['css' => [], 'js' => []],
         'select'        => ['css' => [], 'js' => []],
+        'checklist'     => ['css' => [], 'js' => []],
         'textarea'      => ['css' => [], 'js' => []],
         'date'          => [
             'css' => [], 
@@ -147,7 +148,7 @@ class Editable implements interfaces\EditableInterface{
      *
      * @param  string $key     字段
      * @param  string $value   值
-     * @param  array  $options 可供选择的项 ['显示文字1'=>1, '显示文字2'=>2]
+     * @param  array  $options 可供选择的项
      * @param  int    $index   当前值的索引 与$value必填1个
      * @return self
      */
@@ -155,6 +156,20 @@ class Editable implements interfaces\EditableInterface{
     {
         return $this->registerComponent(__FUNCTION__, $key, $value, $options, $index);
     }
+
+    /**
+     * 复选框
+     *
+     * @param  int          $key        字段
+     * @param  string|array $value      值 如1,2,3或者[1,2,3]
+     * @param  array        $options    可供选择的项
+     * @return self
+     */
+    public function checklist($key, $value = null, array $options)
+    {
+        return $this->registerComponent(__FUNCTION__, $key, $value, $options);
+    }
+    
 
     /**
      * 日期
@@ -185,7 +200,7 @@ class Editable implements interfaces\EditableInterface{
      *
      * @param  string $key     字段
      * @param  string $value   值
-     * @param  array  $options 可供选择的项 ['显示文字1'=>1, '显示文字2'=>2]
+     * @param  array  $options 可供选择的项
      * @return self
      */
     public function typeaheadjs($key, $value = null, array $options = [])
@@ -279,7 +294,7 @@ class Editable implements interfaces\EditableInterface{
                 foreach($component[3] as $option) {
                     $option_value = isset($option['value']) ? $option['value']: null;
                     if($value == $option_value) {
-                        $show_value = $option['tokens'] . ' (' . $value . ') ';
+                        $show_value = $option['text'] . ' (' . $value . ') ';
                         break;
                     }
                 }
@@ -294,11 +309,12 @@ class Editable implements interfaces\EditableInterface{
             /**//**//**//**//**/->setDataUrl($this->ajax)
             /**//**//**//**//**/->setDataTitle($title)
             /**//**//**//**//**/->setDataType($type)
-            /**//**//**//**//**/->setDataValue($value);
+            /**//**//**//**//**/->setDataValue($value)
+            /**//**//**//**//**/->setDataPlacement('bottom');
             /**//**//**//**//**/if(!isset($this->hidden[$key])) {
             /**//**//**//**//**//**/$builder->setClass('editable-link');
             /**//**//**//**//**/}
-            /**//**//**//**//**/if($type == 'select' || $type == 'tag') {
+            /**//**//**//**//**/if($type == 'select' || $type == 'tag' || $type == 'checklist') {
             /**//**//**//**//**//**/$builder->setDataSource(json_encode($component[3]));
             /**//**//**//**//**/}else if($type == 'typeaheadjs') {
             /**//**//**//**//**//**/$builder->setDataTypeahead( # @todo: template
@@ -309,12 +325,12 @@ class Editable implements interfaces\EditableInterface{
             /**//**//**//**//**//**/);
             /**//**//**//**//**/}else if($type == 'date') {
             /**//**//**//**//**//**/$builder->setDataType('combodate')
-            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY MM DD')
+            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD')
             /**//**//**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD')
             /**//**//**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD');
             /**//**//**//**//**/}else if($type == 'datetime') {
             /**//**//**//**//**//**/$builder->setDataType('combodate')
-            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY MM DD ** HH:mm:ss')
+            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD HH:mm:ss')
             /**//**//**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD HH:mm:ss')
             /**//**//**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD HH:mm:ss');
             /**//**//**//**//**/}else if($type == 'wysiwyg') {
@@ -346,11 +362,40 @@ class Editable implements interfaces\EditableInterface{
                                 if(!$(self).attr('data-typeahead')) return;
                                 opt = $.parseJSON($(self).attr('data-typeahead')) ? $.extend($(self).data('typeahead'), {
                                     template: function(item) {
+                                        if('undefined' == typeof item.tokens) return item.value;
                                         return item.tokens + ' (' + item.value + ') ';
                                     }
                                 }) : null;
                                 return opt;
                             }catch(e){console.error(e)}
+                        })(self),
+                        display: (function(self){
+                            if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {
+                                return null;
+                            }
+                            return function(arg_value, options) {
+                                if('object' == typeof arg_value && 'undefined' !== typeof arg_value.length && arg_value.constructor.name == 'Array') {
+                                }else{
+                                    arg_value = [arg_value];
+                                }
+
+
+                                var shown = '';
+                                for(var i = 0; i < arg_value.length; i++){
+                                    var value = arg_value[i];
+                                    if(!options || 'undefined' == typeof options || 'object' !== typeof options || 'undefined' == typeof options.length)
+                                        return shown += value;
+
+                                    elem = $.grep(options, function(o){return o.value == value;});
+                                    if(elem.length) {
+                                        shown += elem[0].text; 
+                                    } else {   
+                                    }
+                                    shown += "\\r\\n";
+                                }
+                                $(self).empty();
+                                return $(self).text(shown);
+                            }
                         })(self)
                     });
                     if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {

@@ -7,7 +7,7 @@ class Editable{
             [
                 'id'            => 12,
                 'name'          => '张君宝',
-                'home'          => 1,
+                'home'          => '武当山',
                 'job'           => 2,
                 'about'         => 'Father of the dragon, stormborn, unburn.',
                 'created_at'    => date('Y-m-d H:i:s'),
@@ -18,12 +18,13 @@ class Editable{
         );
 
         $editable->typeahead('home', null, [
-              ['value' => '1', 'tokens' => '武当山'],
-              ['value' => '2', 'tokens' => '华山'],
-              ['value' => '3', 'tokens' => '峨眉山']
+              '武当山',
+              '华山',
+              '峨眉山',
+              '井冈山',
         ], 0);
 
-        $editable->select('job', null, [
+        $editable->checklist('job', null, [
               ['value' => 1, 'text' => '一代弱鸡'],
               ['value' => 2, 'text' => '一代宗师'],
               ['value' => 3, 'text' => '一代刺客']
