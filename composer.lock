@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c91a96fbefcdb42fb33fae1e7aab9f4",
+    "content-hash": "dd4dee4aa865a071180af26b5c27f6ed",
     "packages": [
         {
             "name": "avplab/php-html-builder",
-            "version": "dev-master",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/avplab/php-html-builder.git",
-                "reference": "75c689a1202511c408152a0182fe890973e5c354"
+                "reference": "687e0e6eccd65477dd9a6b6a8c70f16c5294b375"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/avplab/php-html-builder/75c689a1202511c408152a0182fe890973e5c354.zip",
-                "reference": "75c689a1202511c408152a0182fe890973e5c354",
+                "url": "https://files.phpcomposer.com/files/avplab/php-html-builder/687e0e6eccd65477dd9a6b6a8c70f16c5294b375.zip",
+                "reference": "687e0e6eccd65477dd9a6b6a8c70f16c5294b375",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "html",
                 "php"
             ],
-            "time": "2017-03-07T08:17:29+00:00"
+            "time": "2017-03-07T06:23:44+00:00"
         },
         {
             "name": "psr/http-message",
@@ -105,9 +105,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "avplab/php-html-builder": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

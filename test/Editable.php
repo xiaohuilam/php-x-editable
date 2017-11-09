@@ -9,6 +9,7 @@ class Editable{
                 'name'          => '张君宝',
                 'home'          => 1,
                 'job'           => 2,
+                'about'         => 'Father of the dragon, stormborn, unburn.',
                 'created_at'    => date('Y-m-d H:i:s'),
             ], 
             'id', 
@@ -27,6 +28,9 @@ class Editable{
               ['value' => 2, 'text' => '一代宗师'],
               ['value' => 3, 'text' => '一代刺客']
         ], 0);
+
+        $editable->wysiwyg('about');
+        $editable->datetime('created_at');
 
         echo $editable->render()->getBody();
     }

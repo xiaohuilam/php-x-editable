@@ -18,8 +18,18 @@ class Editable implements interfaces\EditableInterface{
         'text'          => ['css' => [], 'js' => []],
         'select'        => ['css' => [], 'js' => []],
         'textarea'      => ['css' => [], 'js' => []],
-        'date'          => ['css' => [], 'js' => []],
-        'datetime'      => ['css' => [], 'js' => []],
+        'date'          => [
+            'css' => [], 
+            'js' => [
+                'https://cdn.jsdelivr.net/gh/moment/moment@2.19.1/min/moment.min.js',
+            ]
+        ],
+        'datetime'      => [
+            'css' => [], 
+            'js' => [
+                'https://cdn.jsdelivr.net/gh/moment/moment@2.19.1/min/moment.min.js',
+            ]
+        ],
         'typeaheadjs'     => [
             'css'   => [
                 'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.min.css',
@@ -34,8 +44,14 @@ class Editable implements interfaces\EditableInterface{
             'js'    => [],
         ],
         'wysiwyg'       => [
-            'css'   => [],
-            'js'    => [],
+            'css'   => [
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.3/bootstrap-wysihtml5-0.0.3.min.css',
+            ],
+            'js'    => [
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.3/wysihtml5-0.3.0.min.js',
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.3/bootstrap-wysihtml5-0.0.3.min.js',
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/wysihtml5-0.0.3.js',
+            ],
         ]
     ];
 
@@ -287,6 +303,18 @@ class Editable implements interfaces\EditableInterface{
             /**//**//**//**//**//**//**/'local' => $component[3],
             /**//**//**//**//**//**//**/])
             /**//**//**//**//**//**/);
+            /**//**//**//**//**/}else if($type == 'date') {
+            /**//**//**//**//**//**/$builder->setDataType('combodate')
+            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY MM DD')
+            /**//**//**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD')
+            /**//**//**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD');
+            /**//**//**//**//**/}else if($type == 'datetime') {
+            /**//**//**//**//**//**/$builder->setDataType('combodate')
+            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY MM DD ** HH:mm:ss')
+            /**//**//**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD HH:mm:ss')
+            /**//**//**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD HH:mm:ss');
+            /**//**//**//**//**/}else if($type == 'wysiwyg') {
+            /**//**//**//**//**//**/$builder->setDataType('wysihtml5');
             /**//**//**//**//**/}
             /**//**//**//**/$builder->end();
             /**//**//**/$builder->end();
