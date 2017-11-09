@@ -311,7 +311,7 @@ class Editable implements interfaces\EditableInterface{
                     $(self).editable({
                         typeahead: (function(a){
                             try{
-                                if(!$(self).attr('data-typeahead')) return null;
+                                if(!$(self).attr('data-typeahead')) return;
                                 opt = $.parseJSON($(self).attr('data-typeahead')) ? $.extend($(self).data('typeahead'), {
                                     template: function(item) {
                                         return item.tokens + ' (' + item.value + ') ';
@@ -320,21 +320,27 @@ class Editable implements interfaces\EditableInterface{
                                 return opt;
                             }catch(e){console.error(e)}
                         })(self)
-                    }).on('save', function(e, params){
-                        try{
-                            if(!$(self).attr('data-typeahead')) return null;
-                            if($.parseJSON($(self).attr('data-typeahead'))){
-                                var local = $(self).data('typeahead').local;
-                                for(i in local) {
-                                    var item = local[i];
-                                    if(item.value == params.submitValue) {
-                                        setTimeout(function(){ $(self).text(item.tokens + ' (' + item.value + ') '); }, 100);
-                                        break;
+                    });
+                    if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {
+                        $(self).on('save', function(e, params){
+                            return e;
+                            try{
+                                if('undefined' == typeof params.submitValue || !params.submitValue || 0==params.submitValue.length) {
+                                    return;
+                                }
+                                if($.parseJSON($(self).attr('data-typeahead'))){
+                                    var local = $(self).data('typeahead').local;
+                                    for(i in local) {
+                                        var item = local[i];
+                                        if(item.value == params.submitValue) {
+                                            setTimeout(function(){ $(self).text(item.tokens + ' (' + item.value + ') '); }, 100);
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                        }catch(e){console.error(e)}
-                    });
+                            }catch(e){console.error(e)}
+                        });
+                    }
                 });
 JAVASCRIPT
 )->setType('application/javascript')->end();
