@@ -1,5 +1,5 @@
 <?php
-namespace Editable\Test;
+namespace Editable\Example;
 
 class Editable{
     public static function test() {
