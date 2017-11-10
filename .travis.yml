@@ -4,4 +4,4 @@ php:
   - '5.6'
   - '7.0'
   - '7.1.9'
-  - '7.2.0RC6'
+script: phpunit tests/EditableBasicTest.php
