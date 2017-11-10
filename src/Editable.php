@@ -364,6 +364,7 @@ class Editable implements interfaces\EditableInterface{
         /**/$builder->script(
                 <<<JAVASCRIPT
                 $.fn.combodate.defaults.maxYear = (new Date).getFullYear();
+                $.fn.combodate.defaults.minuteStep = 1;
 
                 $("#table-wrapper-$uuid .editable-link").each(function(){
                     var self = this;
