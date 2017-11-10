@@ -55,7 +55,7 @@ $editable->datetime('created_at');
 echo $editable->render()->getBody();
 ```
 
-To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/master/test/Editable.php
+To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/example/Editable.php
 
 ![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png)
 ![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png)
