@@ -72,13 +72,27 @@ echo $editable->render()->getBody();
 
 完整的DEMO例子请见 https://github.com/xiaohuilam/php-x-editable/blob/dev/example/Editable.php
 
-<img alt="1.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
-<img alt="2.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
-<img alt="3.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
-<img alt="5.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
-<img alt="4.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
-<img alt="6.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
-<img alt="7.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
+
+#### Input[Text]
+![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png)
+
+#### Typeahead
+![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png)
+
+#### Tag
+![3.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png)
+
+#### Checklist
+![5.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png)
+
+#### Select
+![4.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png)
+
+#### Wysiwyg(所见即所得)
+![6.png](https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png)
+
+#### Datetime(日期时间)
+![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png)
 
 
 ## Features and TODO
