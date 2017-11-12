@@ -8,9 +8,23 @@
 composer require diana/php-x-editable -vvv
 ```
 
+在安装完成后，javascript和css是引用jsdelivr的URL来载入的。
+如果您的项目是内网，或者因为其他限制需要本地托管的，请执行下面的命令即可托管在本地。
+
+```
+composer require diana/php-x-editable-assets -vvv
+composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets
+```
+
+其中，第二个命令是发布CSS/JS到项目的WEB目录的。针对laravel(lumen)和thinphp5框架，会发布到public目录。
+其他情况默认发布到根目录。
+如果框架不满足上面情况，需要手工执行
+```
+cp -R ./vendor/diana/php-x-editable-assets/assets/ 你项目的WEB根目录/
+```
+
 
 ## 使用
-
 
 ```php
 <?php
@@ -58,13 +72,13 @@ echo $editable->render()->getBody();
 
 完整的DEMO例子请见 https://github.com/xiaohuilam/php-x-editable/blob/dev/example/Editable.php
 
-![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png)
-![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png)
-![3.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png)
-![5.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png)
-![4.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png)
-![6.png](https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png)
-![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png)
+![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png =440x)
+![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png =440x)
+![3.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png =440x)
+![5.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png =440x)
+![4.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png =440x)
+![6.png](https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png =440x)
+![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png =440x)
 
 
 ## Features and TODO

@@ -8,6 +8,25 @@ Maybe the best X-Editable PHP plugin of the world
 composer require diana/php-x-editable -vvv
 ```
 
+After installed, javascript and css is using jsdelivr.
+But if, your project is local web using, or orther limitation to hosted assets locally,
+please run the command bellow:
+
+```
+composer require diana/php-x-editable-assets -vvv
+composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets
+```
+
+The secondary line, is publishing css/js to web directory of your project. it will detect laravel(lumen)
+and thinkphp5 framework, to publish to `public/` directory.
+ortherwise, defaultly, it will deploy css/js to web root dir itself.
+
+If indeed, please run
+
+```
+cp -R ./vendor/diana/php-x-editable-assets/assets/ SPECIFIC_PROJECT_FULLPATH/
+```
+
 
 ## Usage
 
@@ -57,13 +76,13 @@ echo $editable->render()->getBody();
 
 To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/example/Editable.php
 
-![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png)
-![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png)
-![3.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png)
-![5.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png)
-![4.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png)
-![6.png](https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png)
-![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png)
+![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png =440x)
+![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png =440x)
+![3.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png =440x)
+![5.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png =440x)
+![4.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png =440x)
+![6.png](https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png =440x)
+![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png =440x)
 
 
 ## Features and TODO
