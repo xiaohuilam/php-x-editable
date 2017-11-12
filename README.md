@@ -76,13 +76,13 @@ echo $editable->render()->getBody();
 
 To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/example/Editable.php
 
-![1.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png =440x)
-![2.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png =440x)
-![3.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png =440x)
-![5.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png =440x)
-![4.png](https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png =440x)
-![6.png](https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png =440x)
-![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png =440x)
+<img alt="1.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5a73db.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
+<img alt="2.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5cc6a1.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
+<img alt="3.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5cf328.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
+<img alt="5.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5e86fd.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
+<img alt="4.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab5f2f18.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
+<img alt="6.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab6068d1.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
+<img alt="7.png" src="https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png" style="width: 440px; height: auto; border: 1px dotted #aaa;">
 
 
 ## Features and TODO
