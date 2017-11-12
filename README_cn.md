@@ -104,7 +104,7 @@ echo $editable->render()->getBody();
 |tags | |已完结|
 |datetime| |已完结|
 |wysiwyg| |已完结|
-|静态资源本地托管 | [To see in the introduce](https://github.com/xiaohuilam/php-x-editable/blob/master/README_cn.md#install)|已完结|
+|静态资源本地托管 |[安装](https://github.com/xiaohuilam/php-x-editable/blob/master/README_cn.md#安装)|已完结|
 |后端自动保存| 就是你不用写保存的代码，因为你在读取时候已经写了所必要的信息 |跳票中|
 |多行编辑|一次编辑多行数据，考虑和datatables插件做支持 |跳票中|
 |二次异步加载 |select和typeahead的下拉数据，做AJAX加载的支持 |跳票中|

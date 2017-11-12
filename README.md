@@ -1,6 +1,6 @@
 # php-x-editable
 
-Maybe the best X-Editable PHP plugin of the world
+Maybe the best X-Editable PHP plugin of the world. 如果你是中文用户，也许看[中文文档](README_cn.md)能更快上手。
 
 ## Install
 
