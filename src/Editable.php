@@ -53,11 +53,11 @@ class Editable implements interfaces\EditableInterface{
         ],
         'tag'           => [
             'css'   => [
-                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2.css',
-                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2-bootstrap.css',
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2.min.css',
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2-bootstrap.min.css',
             ],
             'js'    => [
-                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2.js',
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/select2/select2.min.js',
             ],
         ],
         'wysiwyg'       => [
@@ -67,7 +67,7 @@ class Editable implements interfaces\EditableInterface{
             'js'    => [
                 'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.3/wysihtml5-0.3.0.min.js',
                 'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.3/bootstrap-wysihtml5-0.0.3.min.js',
-                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/wysihtml5-0.0.3.js',
+                'https://cdn.jsdelivr.net/gh/xiaohuilam/x-editable@9.8.1/assets/x-editable/inputs-ext/wysihtml5/wysihtml5-0.0.3.min.js',
             ],
         ]
     ];
