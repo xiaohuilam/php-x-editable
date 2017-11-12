@@ -95,25 +95,28 @@ echo $editable->render()->getBody();
 ![7.png](https://ooo.0o0.ooo/2017/11/09/5a042ab610250.png)
 
 
-## Features and TODO
+## 功能进度
 
- - Features
-     - text 
-     - select 
-     - tag
-     - datetime
-     - wysiwyg
-     - 静态资源本地托管
-        - 想本地存放JS和CSS文件?
-        - 先运行`composer require vendor/diana/php-x-editable-assets`
-        - 再运行`composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets`
+|功能 |描述 |状态 |
+|--|--|--|
+|text | |已完结|
+|select | |已完结|
+|tags | |已完结|
+|datetime| |已完结|
+|wysiwyg| |已完结|
+|静态资源本地托管 | [To see in the introduce](https://github.com/xiaohuilam/php-x-editable/blob/master/README_cn.md#install)|已完结|
+|后端自动保存| 就是你不用写保存的代码，因为你在读取时候已经写了所必要的信息 |跳票中|
+|多行编辑|一次编辑多行数据，考虑和datatables插件做支持 |跳票中|
+|二次异步加载 |select和typeahead的下拉数据，做AJAX加载的支持 |跳票中|
+|文件上传 |x-editable是不支持上传文件的，我打算支持他|跳票中|
+|追加额外的POST参数|如CSRF_TOKEN|跳票中|
 
- - TODO
-     - 保存的自动化         就是你不用写保存的代码，因为你在读取时候已经写了所必要的信息
-     - 多行编辑             一次编辑多行数据，考虑和datatables插件做支持
-     - 二次异步加载         select和typeahead的下拉数据，做AJAX加载的支持
-     - 文件上传和预览支持    x-editable是不支持上传文件的，我打算支持他
-     - 追加额外的POST参数    如CSRF_TOKEN
+
+## 特别鸣谢
+
+ - x-editable: https://github.com/vitalets/x-editable
+ - bootstrap: https://github.com/twbs/bootstrap/releases/tag/v3.3.7
+ - php-html-builder: https://github.com/avplab/php-html-builder
 
 
 ## 授权

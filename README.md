@@ -102,24 +102,25 @@ To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/exa
 
 ## Features and TODO
 
- - Features
-     - text 
-     - select 
-     - tag
-     - datetime
-     - wysiwyg
-     - assets self host 
-        - Want to store javascript and style files own host?
-        - first of all run `composer require vendor/diana/php-x-editable-assets`
-        - and then run `composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets`
+|Feature |Description |Status |
+|--|--|--|
+|text | |Finished|
+|select | |Finished|
+|tags | |Finished|
+|datetime| |Finished|
+|wysiwyg| |Finished|
+| assets self host | [To see in the introduce](https://github.com/xiaohuilam/php-x-editable#install)|Finished|
+|Auto save| re-use your data reading code, avoid code again. | Awaiting |
+|Multiple rows|multiple rows data editing | Awaiting|
+|Async source |select/typeahead's ajax remote source support| Awaiting|
+|File upload |x-editable is not support file uploading natively, until us| Awaiting|
+|Post extra param|other params like csrf_token|Awaiting|
 
- - TODO
-     - Auto saver          re-use your data reading code, avoid code again.
-     - Multiple rows       multiple rows data editing
-     - Async source        select/typeahead's ajax remote source support
-     - File upload         x-editable is not support file uploading natively, until us.
-     - Post extra param    other params like csrf_token
+## Credits & thanks
 
+ - x-editable: https://github.com/vitalets/x-editable
+ - bootstrap: https://github.com/twbs/bootstrap/releases/tag/v3.3.7
+ - php-html-builder: https://github.com/avplab/php-html-builder
 
 ## License
 
