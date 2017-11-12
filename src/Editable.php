@@ -15,6 +15,18 @@ class Editable implements interfaces\EditableInterface{
      * 上面已声明的各种第三方库
      */
     protected $vendor_assets = [
+
+        'xeditable'     => [
+            'css'   => [
+                'https://cdn.jsdelivr.net/gh/twbs/bootstrap@3.3.5/dist/css/bootstrap.min.css',
+                'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/bootstrap3-editable/css/bootstrap-editable.min.css',
+            ],
+            'js'    => [
+                'https://cdn.jsdelivr.net/npm/jquery@1.12.1/dist/jquery.min.js',
+                'https://cdn.jsdelivr.net/gh/twbs/bootstrap@3.3.5/dist/js/bootstrap.min.js',
+                'https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
+            ],
+        ],
         'text'          => ['css' => [], 'js' => []],
         'select'        => ['css' => [], 'js' => []],
         'checklist'     => ['css' => [], 'js' => []],
@@ -88,6 +100,9 @@ class Editable implements interfaces\EditableInterface{
         $this->ajax     = $ajax;
 
         $this->hidden[$pk]   = 1;
+
+        if(class_exists('\Editable\Assets\LocalAssets'))
+            $this->vendor_assets = \Editable\Assets\LocalAssets::instance()->getVendorAssetsRoutingUrl();
 
         foreach($this->row as $key => $value)
             $this->input($key, $value);
@@ -255,8 +270,8 @@ class Editable implements interfaces\EditableInterface{
         $builder = new PhpHtmlBuilder();
         $uuid = mt_rand(1000000, 99999999);
         $builder->div()->setClass('table-wrapper')->setId('table-wrapper-'.$uuid);
-        /**/$builder->link()->setRel('stylesheet')->setHref('https://cdn.jsdelivr.net/gh/twbs/bootstrap@3.3.5/dist/css/bootstrap.min.css')->end();
-        /**/$builder->link()->setRel('stylesheet')->setHref('https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/bootstrap3-editable/css/bootstrap-editable.min.css')->end();
+        /**/$builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][0])->end();
+        /**/$builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][1])->end();
         foreach($this->existed_dom_type as $dom_type => $one) {
             foreach($this->vendor_assets[$dom_type]['css'] as $css) {
         /**/$builder->link()->setRel('stylesheet')->setHref($css)->end();
@@ -353,9 +368,10 @@ class Editable implements interfaces\EditableInterface{
         /**//**/$builder->end();
         /**/$builder->end();
 
-        /**/$builder->script()->setType('application/javascript')->setSrc('https://cdn.jsdelivr.net/npm/jquery@1.12.1/dist/jquery.min.js')->end();
-        /**/$builder->script()->setType('application/javascript')->setSrc('https://cdn.jsdelivr.net/gh/twbs/bootstrap@3.3.5/dist/js/bootstrap.min.js')->end();
-        /**/$builder->script()->setType('application/javascript')->setSrc('https://cdn.jsdelivr.net/gh/vitalets/x-editable@1.5.1/dist/bootstrap3-editable/js/bootstrap-editable.min.js')->end();
+        /**/$builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][0])->end();
+        /**/$builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][1])->end();
+        /**/$builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][2])->end();
+
         foreach($this->existed_dom_type as $dom_type => $one) {
             foreach($this->vendor_assets[$dom_type]['js'] as $js) {
         /**/$builder->script()->setType('application/javascript')->setSrc($js)->end();
