@@ -113,6 +113,7 @@ echo $editable->render()->getBody();
      - 多行编辑             一次编辑多行数据，考虑和datatables插件做支持
      - 二次异步加载         select和typeahead的下拉数据，做AJAX加载的支持
      - 文件上传和预览支持    x-editable是不支持上传文件的，我打算支持他
+     - 追加额外的POST参数    如CSRF_TOKEN
 
 
 ## 授权

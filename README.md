@@ -118,7 +118,7 @@ To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/exa
      - Multiple rows       multiple rows data editing
      - Async source        select/typeahead's ajax remote source support
      - File upload         x-editable is not support file uploading natively, until us.
-
+     - Post extra param    other params like csrf_token
 
 
 ## License
