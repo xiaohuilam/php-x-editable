@@ -75,9 +75,12 @@ echo $editable->render()->getBody();
      - tag
      - datetime
      - wysiwyg
+     - 静态资源本地托管
+        - 想本地存放JS和CSS文件?
+        - 先运行`composer require vendor/diana/php-x-editable-assets`
+        - 再运行`composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets`
 
  - TODO
-     - jscss本地存储       目前用的是JSDelivr，我计划是开个新包，比如diana/local-x-editable-assets
      - 保存的自动化         就是你不用写保存的代码，因为你在读取时候已经写了所必要的信息
      - 多行编辑             一次编辑多行数据，考虑和datatables插件做支持
      - 二次异步加载         select和typeahead的下拉数据，做AJAX加载的支持

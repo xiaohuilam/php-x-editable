@@ -74,9 +74,12 @@ To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/exa
      - tag
      - datetime
      - wysiwyg
+     - assets self host 
+        - Want to store javascript and style files own host?
+        - first of all run `composer require vendor/diana/php-x-editable-assets`
+        - and then run `composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets`
 
  - TODO
-     - jscss Self Hosted   to host js and css by another package `diana/local-x-editable-assets`
      - Auto saver          re-use your data reading code, avoid code again.
      - Multiple rows       multiple rows data editing
      - Async source        select/typeahead's ajax remote source support

@@ -15,7 +15,6 @@ class Editable implements interfaces\EditableInterface{
      * 上面已声明的各种第三方库
      */
     protected $vendor_assets = [
-
         'xeditable'     => [
             'css'   => [
                 'https://cdn.jsdelivr.net/gh/twbs/bootstrap@3.3.5/dist/css/bootstrap.min.css',
