@@ -5,7 +5,7 @@ use Editable\Integrates\EditableResponse;
 use Editable\Integrates\EditableException;
 use AvpLab\PhpHtmlBuilder;
 
-class Editable implements interfaces\EditableInterface{
+class Editable implements Interfaces\EditableInterface{
     /**
      * 已声明使用的类型, 用于加载JS
      */
@@ -88,7 +88,7 @@ class Editable implements interfaces\EditableInterface{
      * @param  array                $hidden 保护字段
      * @param  string               $ajax   AJAX保存URL
      */
-    public function __construct($row = null, string $pk = "id", array $hidden = [], $ajax = '')
+    public function __construct($row = null, $pk = "id", $hidden = [], $ajax = '')
     {
         if(!$row)
             throw new EditableException(null, EditableException::NO_DATA);
