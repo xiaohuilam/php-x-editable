@@ -81,6 +81,6 @@ class EditableBasicTest extends TestCase{
 
     public function testRender()
     {
-        $this->assertInstanceOf(EditableResponse::class, $this->editable->render());
+        $this->assertInstanceOf("\\Editable\\Integrates\\EditableResponse", $this->editable->render());
     }
 }
