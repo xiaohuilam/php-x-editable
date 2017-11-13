@@ -16,7 +16,7 @@ class Editable{
             ], 
             'id', 
             [], 
-            'test.php?action=save'
+            'demo.php?action=save'
         );
 
         $editable->typeahead('home', null, [

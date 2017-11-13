@@ -17,7 +17,11 @@
     "autoload": {
         "psr-4": {
             "Editable\\": "src/",
-            "Editable\\Example\\": "example/",
+            "Editable\\Example\\": "example/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Editable\\Test\\": "test/"
         }
     }
