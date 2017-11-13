@@ -9,7 +9,7 @@
     "require": {
         "php": ">5.3",
         "psr/http-message": "1.*",
-        "avplab/php-html-builder": "2.*"
+        "avplab/php-html-builder": "~1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
