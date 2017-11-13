@@ -28,7 +28,7 @@ class EditableBasicTest extends TestCase{
             [], 
             'test.php?action=save'
         );
-        call_user_func_array([parent::class, '__construct'], func_get_args());
+        parent::__construct();
     }
 
     public function testTypeahead()
