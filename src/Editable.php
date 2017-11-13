@@ -94,7 +94,7 @@ class Editable implements Interfaces\EditableInterface{
             throw new EditableException(null, EditableException::NO_DATA);
 
         $this->row      = $row;
-        $this->pk       = $this->row[$pk] ?? null;
+        $this->pk       = isset($this->row[$pk]) ? $this->row[$pk] : null;
         $this->hidden   = array_flip($hidden);
         $this->ajax     = $ajax;
 
