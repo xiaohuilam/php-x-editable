@@ -4,7 +4,8 @@ Maybe the best X-Editable PHP plugin of the world. 如果你是中文用户，�
 
 
 ---
-[![7.png](https://api.travis-ci.org/xiaohuilam/php-x-editable.svg?branch=master)](https://travis-ci.org/xiaohuilam/php-x-editable)
+[![travis-ci.svg](https://api.travis-ci.org/xiaohuilam/php-x-editable.svg?branch=master)](https://travis-ci.org/xiaohuilam/php-x-editable) [![download-count.svg](https://img.shields.io/packagist/dt/diana/php-x-editable.svg)](https://packagist.org/packages/diana/php-x-editable) [![open-issue.png](https://img.shields.io/github/issues/xiaohuilam/php-x-editable.svg)](https://github.com/xiaohuilam/php-x-editable/issues) [![open-pull-request.png](https://img.shields.io/github/issues-pr/xiaohuilam/php-x-editable.svg)](https://github.com/xiaohuilam/php-x-editable/pulls) [![last-commit.png](https://img.shields.io/github/last-commit/xiaohuilam/php-x-editable.svg)](https://github.com/xiaohuilam/php-x-editable/commits) [![contributors.png](https://img.shields.io/github/contributors/xiaohuilam/php-x-editabl.svg)](https://github.com/xiaohuilam/php-x-editable/graphs/contributors)
+
 
 ## Install
 
