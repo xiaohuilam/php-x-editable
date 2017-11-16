@@ -133,3 +133,10 @@ To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/exa
 MIT
 ```
 
+
+## Donation
+
+There's no donation accepted.
+But you can support me when you shopping checkout with `Alipay wallet`  APP.
+Before checkout, scan the QR code, you can get a small amount disacount, and me, will receive a bonus.
+![zfb.jpg](https://i.loli.net/2017/11/16/5a0d3d6f957bc.jpg)

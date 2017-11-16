@@ -129,3 +129,9 @@ echo $editable->render()->getBody();
 ```
 MIT
 ```
+
+
+## 捐助
+
+您不用捐助我，您只需用 `支付宝钱包` APP扫描下面二维码后，买单时您可获得若干毛钱的减免，而我也可获得奖励。
+![zfb.jpg](https://i.loli.net/2017/11/16/5a0d3d6f957bc.jpg)
