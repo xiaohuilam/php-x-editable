@@ -17,7 +17,7 @@ Maybe the best X-Editable PHP plugin of the world. 如果你是中文用户，�
 ## Install
 
 ```
-composer require diana/php-x-editable -vvv
+ $ composer require diana/php-x-editable -vvv
 ```
 
 After installed, javascript and css is using jsdelivr.
@@ -25,8 +25,8 @@ But if, your project is local web using, or orther limitation to hosted assets l
 please run the command bellow:
 
 ```
-composer require diana/php-x-editable-assets -vvv
-composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets
+ $ composer require diana/php-x-editable-assets -vvv
+ $ composer run-script post-autoload-dump -d vendor/diana/php-x-editable-assets
 ```
 
 The secondary line, is publishing css/js to web directory of your project. it will detect laravel(lumen)
@@ -36,7 +36,7 @@ ortherwise, defaultly, it will deploy css/js to web root dir itself.
 If indeed, please run
 
 ```
-cp -R ./vendor/diana/php-x-editable-assets/assets/ SPECIFIC_PROJECT_FULLPATH/
+ $ cp -R ./vendor/diana/php-x-editable-assets/assets/ SPECIFIC_PROJECT_FULLPATH/
 ```
 
 
