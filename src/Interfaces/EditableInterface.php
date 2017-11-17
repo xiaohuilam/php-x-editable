@@ -16,7 +16,7 @@ interface EditableInterface{
      * 渲染模板
      *
      * @param  bool $and_destroy 考虑到常驻进程的框架 保留此选项 默认均销毁
-     * @return EditableResponse
+     * @return \Editable\Integrates\EditableResponse
      */
     public function render($and_destroy = true);
 
