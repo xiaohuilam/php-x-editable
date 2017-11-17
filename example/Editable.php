@@ -25,13 +25,13 @@ class Editable{
             '华山',
             '峨眉山',
             '井冈山',
-        ], 0);
+        ]);
 
         $editable->checklist('job', null, [
             ['value' => 1, 'text' => '一代弱鸡'],
             ['value' => 2, 'text' => '一代宗师'],
             ['value' => 3, 'text' => '一代刺客']
-        ], 0);
+        ]);
 
         $editable->select('gender', null, [
             ['value' => 0, 'text' => '未知'],

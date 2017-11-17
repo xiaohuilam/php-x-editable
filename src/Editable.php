@@ -186,7 +186,7 @@ class Editable implements Interfaces\EditableInterface{
     /**
      * 复选框
      *
-     * @param  int          $key        字段
+     * @param  string       $key        字段
      * @param  string|array $value      值 如1,2,3或者[1,2,3]
      * @param  mixed        $options    可供选择的项
      * @return self
