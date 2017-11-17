@@ -112,7 +112,7 @@ echo $editable->render()->getBody();
 |静态资源本地托管 |[安装](https://github.com/xiaohuilam/php-x-editable/blob/master/README_cn.md#安装)|已完结|
 |后端自动保存| 就是你不用写保存的代码，因为你在读取时候已经写了所必要的信息 |跳票中|
 |多行编辑|一次编辑多行数据，考虑和datatables插件做支持 |跳票中|
-|二次异步加载 |select和typeahead的下拉数据，做AJAX加载的支持 |跳票中|
+|二次异步加载 |select和typeahead的下拉数据，做AJAX加载的支持 |部分支持([单选框select已支持](https://github.com/xiaohuilam/php-x-editable/blob/dev/example/Editable.php#L47))|
 |文件上传 |x-editable是不支持上传文件的，我打算支持他|跳票中|
 |追加额外的POST参数|如CSRF_TOKEN|跳票中|
 

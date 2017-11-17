@@ -130,7 +130,14 @@ class Editable implements Interfaces\EditableInterface{
      */
     public function protect($key)
     {
-        $this->hidden[$key] = 1;
+        if(is_array($key))
+            foreach($key as $each) {
+                $this->protect($each);
+            }
+
+        else
+            $this->hidden[$key] = 1;
+
         return $this;
     }
 
@@ -167,11 +174,11 @@ class Editable implements Interfaces\EditableInterface{
      *
      * @param  string $key     字段
      * @param  string $value   值
-     * @param  array  $options 可供选择的项
+     * @param  mixed  $options 可供选择的项
      * @param  int    $index   当前值的索引 与$value必填1个
      * @return self
      */
-    public function select($key, $value = null, array $options = [], $index = null)
+    public function select($key, $value = null, $options = [], $index = null)
     {
         return $this->registerComponent(__FUNCTION__, $key, $value, $options, $index);
     }
@@ -181,10 +188,10 @@ class Editable implements Interfaces\EditableInterface{
      *
      * @param  int          $key        字段
      * @param  string|array $value      值 如1,2,3或者[1,2,3]
-     * @param  array        $options    可供选择的项
+     * @param  mixed        $options    可供选择的项
      * @return self
      */
-    public function checklist($key, $value = null, array $options)
+    public function checklist($key, $value = null, $options)
     {
         return $this->registerComponent(__FUNCTION__, $key, $value, $options);
     }
@@ -219,15 +226,15 @@ class Editable implements Interfaces\EditableInterface{
      *
      * @param  string $key     字段
      * @param  string $value   值
-     * @param  array  $options 可供选择的项
+     * @param  mixed  $options 可供选择的项
      * @return self
      */
-    public function typeaheadjs($key, $value = null, array $options = [])
+    public function typeaheadjs($key, $value = null, $options = [])
     {
         return $this->registerComponent(__FUNCTION__, $key, $value, $options);
     }
 
-    public function typeahead($key, $value = null, array $options = [])
+    public function typeahead($key, $value = null, $options = [])
     {
         return $this->typeaheadjs($key, $value, $options);
     }
@@ -302,12 +309,16 @@ class Editable implements Interfaces\EditableInterface{
             $show_value = $value;
             if($type == 'select') {
                 $show_value = '';
-                foreach($component[3] as $option) {
-                    $option_value = isset($option['value']) ? $option['value']: null;
-                    if($value == $option_value) {
-                        $show_value = $option['text'];
-                        break;
+                if(is_array($component[3])) {
+                    foreach($component[3] as $option) {
+                        $option_value = isset($option['value']) ? $option['value']: null;
+                        if($value == $option_value) {
+                            $show_value = $option['text'];
+                            break;
+                        }
                     }
+                } else if(is_string($component[3])) {
+
                 }
             }else if($type == 'typeaheadjs') {
                 $show_value = '';
@@ -340,7 +351,7 @@ class Editable implements Interfaces\EditableInterface{
             /**//**//**//**//**//**/$builder->setClass('editable-link');
             /**//**//**//**//**/}
             /**//**//**//**//**/if($type == 'select' || $type == 'tag' || $type == 'checklist') {
-            /**//**//**//**//**//**/$builder->setDataSource(json_encode($component[3]));
+            /**//**//**//**//**//**/$builder->setDataSource(is_string($component[3])?$component[3]:json_encode($component[3]));
             /**//**//**//**//**/}else if($type == 'typeaheadjs') {
             /**//**//**//**//**//**/$builder->setDataTypeahead( # @todo: template
             /**//**//**//**//**//**//**/json_encode([

@@ -10,6 +10,7 @@ class Editable{
                 'home'          => '武当山',
                 'prefer'        => 'php,html',
                 'gender'        => 1,
+                'marriage'      => 3,
                 'job'           => 2,
                 'about'         => 'Throne of the seven kingdoms,<br/> <i>Father of the dragon</i>, <b>stormborn</b>, <u>unburn</u>.',
                 'created_at'    => date('Y-m-d H:i:s'),
@@ -42,6 +43,8 @@ class Editable{
 
         $editable->wysiwyg('about');
         $editable->datetime('created_at');
+
+        $editable->select('marriage', null, '/demo.php?action=marriage', 0);
 
         return $editable->render()->getBody();
     }

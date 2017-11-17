@@ -117,7 +117,7 @@ To get full demo here: https://github.com/xiaohuilam/php-x-editable/blob/dev/exa
 | assets self host | [To see in the introduce](https://github.com/xiaohuilam/php-x-editable#install)|Finished|
 |Auto save| re-use your data reading code, avoid code again. | Awaiting |
 |Multiple rows|multiple rows data editing | Awaiting|
-|Async source |select/typeahead's ajax remote source support| Awaiting|
+|Async source |select/typeahead's ajax remote source support| Partly([supportted with select box currently](https://github.com/xiaohuilam/php-x-editable/blob/dev/example/Editable.php#L47))|
 |File upload |x-editable is not support file uploading natively, until us| Awaiting|
 |Post extra param|other params like csrf_token|Awaiting|
 
