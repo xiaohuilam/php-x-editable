@@ -7,12 +7,12 @@ use AvpLab\PhpHtmlBuilder;
 
 class Editable implements Interfaces\EditableInterface{
     /**
-     * 已声明使用的类型, 用于加载JS
+     * @var array 已声明使用的类型, 用于加载JS
      */
     protected $existed_dom_type = [];
 
     /**
-     * 上面已声明的各种第三方库
+     * @var array 上面已声明的各种第三方库
      */
     protected $vendor_assets = [
         'xeditable'     => [
@@ -73,7 +73,7 @@ class Editable implements Interfaces\EditableInterface{
     ];
 
     /**
-     * 所有数据 [$type, $key, $value, $options, $index]
+     * @var array 所有数据 [$type, $key, $value, $options, $index]
      */
     protected $data = [];
 
@@ -81,6 +81,16 @@ class Editable implements Interfaces\EditableInterface{
     protected $pk;
     protected $hidden;
     protected $ajax;
+
+    /**
+     * @var PhpHtmlBuilder   HTML构造器
+     */
+    protected $builder;
+
+    /**
+     * @var int
+     */
+    protected $uuid;
 
     /**
      * @param  array|ArrayAccess    $row    数据库中的一行数据
@@ -264,7 +274,193 @@ class Editable implements Interfaces\EditableInterface{
         return $this->registerComponent(__FUNCTION__, $key, $value);
     }
 
-    
+    /**
+     * 控件遍历方法
+     * @param   array          $each     each in $this->data
+     * @return  self
+     */
+    protected function __every_element($each)
+    {
+
+        $type   = $each[0];
+        $key    = $each[1];
+        if($each[2] === null && isset($this->row[$key]) && $this->row[$key] != null) {
+            $each[2] = $this->row[$key];
+        }
+        $value  = $each[2];
+        $show_name = ucfirst(preg_replace_callback('/(_([a-zA-Z0-9]))/', function($a) {
+            if(isset($a[2])) return ' '.strtoupper($a[2]);
+            return $a;
+        }, $key));
+        $title  = 'Type the '.$show_name;
+        $show_type = $type;
+
+        $show_value = $value;
+        if($type == 'select') {
+            $show_value = '';
+            if(is_array($each[3])) {
+                foreach($each[3] as $option) {
+                    $option_value = isset($option['value']) ? $option['value']: null;
+                    if($value == $option_value) {
+                        $show_value = $option['text'];
+                        break;
+                    }
+                }
+            } else if(is_string($each[3])) {
+
+            }
+        }else if($type == 'typeaheadjs') {
+            $show_value = '';
+            foreach($each[3] as $option) {
+                $option_value = isset($option['value']) ? $option['value']: null;
+                if($value == $option_value) {
+                    $show_value = $option['text'] . ' (' . $value . ') ';
+                    break;
+                }
+            }
+        }else if($type == 'wysiwyg') {
+            $show_type = 'wysihtml5';
+        }else if($type == 'tag') {
+            $show_type = 'select2';
+        }
+
+
+        $this->builder->tr();
+        /**/$this->builder->td($show_name)->end();
+        /**/$this->builder->td();
+        /**//**/$this->builder->a($show_value)
+        /**//**//**/->setDataName($key)
+        /**//**//**/->setDataPk($this->pk)
+        /**//**//**/->setDataUrl($this->ajax)
+        /**//**//**/->setDataTitle($title)
+        /**//**//**/->setDataType($show_type)
+        /**//**//**/->setDataValue($value)
+        /**//**//**/->setDataPlacement('bottom');
+        /**//**//**/if(!isset($this->hidden[$key])) {
+        /**//**//**//**/$this->builder->setClass('editable-link');
+        /**//**//**/}
+        /**//**//**/if($type == 'select' || $type == 'tag' || $type == 'checklist') {
+        /**//**//**//**/$this->builder->setDataSource(is_string($each[3])?$each[3]:json_encode($each[3]));
+        /**//**//**/}else if($type == 'typeaheadjs') {
+        /**//**//**//**/$this->builder->setDataTypeahead( # @todo: template
+        /**//**//**//**//**/json_encode([
+        /**//**//**//**//**/'name' => $key,
+        /**//**//**//**//**/'local' => $each[3],
+        /**//**//**//**//**/])
+        /**//**//**//**/);
+        /**//**//**/}else if($type == 'date') {
+        /**//**//**//**/$this->builder->setDataType('combodate')
+        /**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD')
+        /**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD')
+        /**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD');
+        /**//**//**/}else if($type == 'datetime') {
+        /**//**//**//**/$this->builder->setDataType('combodate')
+        /**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD HH:mm:ss')
+        /**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD HH:mm:ss')
+        /**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD HH:mm:ss');
+        /**//**//**/}
+        /**//**/$this->builder->end();
+        /**/$this->builder->end();
+        $this->builder->end();
+
+        return $this;
+    }
+
+    /**
+     * 尾部JS
+     * 
+     * @return int
+     */
+    public function __script()
+    {
+        $this->builder->script(<<<JAVASCRIPT
+            $.fn.combodate.defaults.maxYear = (new Date).getFullYear();
+            $.fn.combodate.defaults.minuteStep = 1;
+
+            $("#table-wrapper-$this->uuid .editable-link").each(function(){
+                var self = this;
+                $(self).editable({
+                    typeahead: (function(a){
+                        try{
+                            if(!$(self).attr('data-typeahead')) return;
+                            opt = $.parseJSON($(self).attr('data-typeahead')) ? $.extend($(self).data('typeahead'), {
+                                template: function(item) {
+                                    if('undefined' == typeof item.tokens) return item.value;
+                                    return item.tokens + ' (' + item.value + ') ';
+                                }
+                            }) : null;
+                            return opt;
+                        }catch(e){console.error(e)}
+                    })(self),
+                    display: (function(self){
+                        if($(self).data('type') == 'combodate') {
+                            return null;
+                        }
+                        if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {
+                            return null;
+                        }
+                        return function(arg_value, options) {
+                            if('object' == typeof arg_value && 'undefined' !== typeof arg_value.length && arg_value.constructor.name == 'Array') {
+                            }else{
+                                arg_value = [arg_value];
+                            }
+
+
+                            var shown = '';
+                            for(var i = 0; i < arg_value.length; i++){
+                                var value = arg_value[i];
+                                if(!options || 'undefined' == typeof options || 'object' !== typeof options || 'undefined' == typeof options.length) {
+                                    shown += value;
+                                    if(i <arg_value.length - 1)shown += ",\\r\\n";
+                                    continue;
+                                }
+
+                                var elem = $.grep(options, function(o){return o.value == value;});
+                                if('undefined' != typeof elem && 'undefined' != typeof elem.length && elem.length) {
+                                    shown += elem[0].text; 
+                                    if(i <arg_value.length - 1)shown += ",\\r\\n";
+                                } else {   
+                                }
+                            }
+                            $(self).empty();
+                            return $(self).html(shown);
+                        };
+                    })(self),
+                    select2: (function(self){
+                        if($(self).data('type') != 'select2') return null;
+                        return {
+                            tags: $(self).data('source'),
+                            tokenSeparators: [",", " "]
+                        };
+                    })(self)
+                });
+                if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {
+                    $(self).on('save', function(e, params){
+                        return e;
+                        try{
+                            if('undefined' == typeof params.submitValue || !params.submitValue || 0==params.submitValue.length) {
+                                return;
+                            }
+                            if($.parseJSON($(self).attr('data-typeahead'))){
+                                var local = $(self).data('typeahead').local;
+                                for(i in local) {
+                                    var item = local[i];
+                                    if(item.value == params.submitValue) {
+                                        setTimeout(function(){ $(self).text(item.tokens + ' (' + item.value + ') '); }, 100);
+                                        break;
+                                    }
+                                }
+                            }
+                        }catch(e){console.error(e)}
+                    });
+                }
+            });
+JAVASCRIPT
+)->setType('application/javascript')->end();
+        return $this;
+    }
+
+
     /**
      * 渲染模板
      *
@@ -273,214 +469,52 @@ class Editable implements Interfaces\EditableInterface{
      */
     public function render($and_destroy = true)
     {
-        $builder = new PhpHtmlBuilder();
-        $uuid = mt_rand(1000000, 99999999);
-        $builder->div()->setClass('table-wrapper')->setId('table-wrapper-'.$uuid);
-        /**/$builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][0])->end();
-        /**/$builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][1])->end();
+        $this->builder = new PhpHtmlBuilder();
+        $this->uuid = mt_rand(1000000, 99999999);
+        $this->builder->div()->setClass('table-wrapper')->setId('table-wrapper-'.$this->uuid);
+        /**/$this->builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][0])->end();
+        /**/$this->builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][1])->end();
         foreach($this->existed_dom_type as $dom_type => $one) {
             foreach($this->vendor_assets[$dom_type]['css'] as $css) {
-        /**/$builder->link()->setRel('stylesheet')->setHref($css)->end();
+        /**/$this->builder->link()->setRel('stylesheet')->setHref($css)->end();
             }
         }
-        /**/$builder->table()->setClass('table table-bordered table-striped');
-        /**//**/$builder->thead();
-        /**//**//**/$builder->tr();
-        /**//**//**//**/$builder->th('Name')->setWidth("35%")->end();
-        /**//**//**//**/$builder->th('Value')->setWidth("65%")->end();
-        /**//**//**/$builder->end();
-        /**//**/$builder->end();
-        /**//**/$builder->tbody();
+        /**/$this->builder->table()->setClass('table table-bordered table-striped');
+        /**//**/$this->builder->thead();
+        /**//**//**/$this->builder->tr();
+        /**//**//**//**/$this->builder->th('Name')->setWidth("35%")->end();
+        /**//**//**//**/$this->builder->th('Value')->setWidth("65%")->end();
+        /**//**//**/$this->builder->end();
+        /**//**/$this->builder->end();
+        /**//**/$this->builder->tbody();
 
         foreach($this->data as $component) {
-            $type   = $component[0];
-            $key    = $component[1];
-            if($component[2] === null && isset($this->row[$key]) && $this->row[$key] != null) {
-                $component[2] = $this->row[$key];
-            }
-            $value  = $component[2];
-            $show_name = ucfirst(preg_replace_callback('/(_([a-zA-Z0-9]))/', function($a) {
-                if(isset($a[2])) return ' '.strtoupper($a[2]);
-                return $a;
-            }, $key));
-            $title  = 'Type the '.$show_name;
-            $show_type = $type;
-
-            $show_value = $value;
-            if($type == 'select') {
-                $show_value = '';
-                if(is_array($component[3])) {
-                    foreach($component[3] as $option) {
-                        $option_value = isset($option['value']) ? $option['value']: null;
-                        if($value == $option_value) {
-                            $show_value = $option['text'];
-                            break;
-                        }
-                    }
-                } else if(is_string($component[3])) {
-
-                }
-            }else if($type == 'typeaheadjs') {
-                $show_value = '';
-                foreach($component[3] as $option) {
-                    $option_value = isset($option['value']) ? $option['value']: null;
-                    if($value == $option_value) {
-                        $show_value = $option['text'] . ' (' . $value . ') ';
-                        break;
-                    }
-                }
-            }else if($type == 'wysiwyg') {
-                $show_type = 'wysihtml5';
-            }else if($type == 'tag') {
-                $show_type = 'select2';
-            }
-
-
-            /**//**/$builder->tr();
-            /**//**//**/$builder->td($show_name)->end();
-            /**//**//**/$builder->td();
-            /**//**//**//**/$builder->a($show_value)
-            /**//**//**//**//**/->setDataName($key)
-            /**//**//**//**//**/->setDataPk($this->pk)
-            /**//**//**//**//**/->setDataUrl($this->ajax)
-            /**//**//**//**//**/->setDataTitle($title)
-            /**//**//**//**//**/->setDataType($show_type)
-            /**//**//**//**//**/->setDataValue($value)
-            /**//**//**//**//**/->setDataPlacement('bottom');
-            /**//**//**//**//**/if(!isset($this->hidden[$key])) {
-            /**//**//**//**//**//**/$builder->setClass('editable-link');
-            /**//**//**//**//**/}
-            /**//**//**//**//**/if($type == 'select' || $type == 'tag' || $type == 'checklist') {
-            /**//**//**//**//**//**/$builder->setDataSource(is_string($component[3])?$component[3]:json_encode($component[3]));
-            /**//**//**//**//**/}else if($type == 'typeaheadjs') {
-            /**//**//**//**//**//**/$builder->setDataTypeahead( # @todo: template
-            /**//**//**//**//**//**//**/json_encode([
-            /**//**//**//**//**//**//**/'name' => $key,
-            /**//**//**//**//**//**//**/'local' => $component[3],
-            /**//**//**//**//**//**//**/])
-            /**//**//**//**//**//**/);
-            /**//**//**//**//**/}else if($type == 'date') {
-            /**//**//**//**//**//**/$builder->setDataType('combodate')
-            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD')
-            /**//**//**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD')
-            /**//**//**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD');
-            /**//**//**//**//**/}else if($type == 'datetime') {
-            /**//**//**//**//**//**/$builder->setDataType('combodate')
-            /**//**//**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD HH:mm:ss')
-            /**//**//**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD HH:mm:ss')
-            /**//**//**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD HH:mm:ss');
-            /**//**//**//**//**/}
-            /**//**//**//**/$builder->end();
-            /**//**//**/$builder->end();
-            /**//**/$builder->end();
+            $this->__every_element($component);
         }
 
-        /**//**/$builder->end();
-        /**/$builder->end();
+        /**//**/$this->builder->end();
+        /**/$this->builder->end();
 
-        /**/$builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][0])->end();
-        /**/$builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][1])->end();
-        /**/$builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][2])->end();
+        /**/$this->builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][0])->end();
+        /**/$this->builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][1])->end();
+        /**/$this->builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][2])->end();
 
         foreach($this->existed_dom_type as $dom_type => $one) {
             foreach($this->vendor_assets[$dom_type]['js'] as $js) {
-        /**/$builder->script()->setType('application/javascript')->setSrc($js)->end();
+        /**/$this->builder->script()->setType('application/javascript')->setSrc($js)->end();
             }
         }
-        /**/$builder->script(
-                <<<JAVASCRIPT
-                $.fn.combodate.defaults.maxYear = (new Date).getFullYear();
-                $.fn.combodate.defaults.minuteStep = 1;
+        $this->__script();
+        $this->builder->end();
 
-                $("#table-wrapper-$uuid .editable-link").each(function(){
-                    var self = this;
-                    $(self).editable({
-                        typeahead: (function(a){
-                            try{
-                                if(!$(self).attr('data-typeahead')) return;
-                                opt = $.parseJSON($(self).attr('data-typeahead')) ? $.extend($(self).data('typeahead'), {
-                                    template: function(item) {
-                                        if('undefined' == typeof item.tokens) return item.value;
-                                        return item.tokens + ' (' + item.value + ') ';
-                                    }
-                                }) : null;
-                                return opt;
-                            }catch(e){console.error(e)}
-                        })(self),
-                        display: (function(self){
-                            if($(self).data('type') == 'combodate') {
-                                return null;
-                            }
-                            if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {
-                                return null;
-                            }
-                            return function(arg_value, options) {
-                                if('object' == typeof arg_value && 'undefined' !== typeof arg_value.length && arg_value.constructor.name == 'Array') {
-                                }else{
-                                    arg_value = [arg_value];
-                                }
-
-
-                                var shown = '';
-                                for(var i = 0; i < arg_value.length; i++){
-                                    var value = arg_value[i];
-                                    if(!options || 'undefined' == typeof options || 'object' !== typeof options || 'undefined' == typeof options.length) {
-                                        shown += value;
-                                        if(i <arg_value.length - 1)shown += ",\\r\\n";
-                                        continue;
-                                    }
-
-                                    var elem = $.grep(options, function(o){return o.value == value;});
-                                    if('undefined' != typeof elem && 'undefined' != typeof elem.length && elem.length) {
-                                        shown += elem[0].text; 
-                                        if(i <arg_value.length - 1)shown += ",\\r\\n";
-                                    } else {   
-                                    }
-                                }
-                                $(self).empty();
-                                return $(self).html(shown);
-                            };
-                        })(self),
-                        select2: (function(self){
-                            if($(self).data('type') != 'select2') return null;
-                            return {
-                                tags: $(self).data('source'),
-                                tokenSeparators: [",", " "]
-                            };
-                        })(self)
-                    });
-                    if($(self).attr('data-typeahead') && $.parseJSON($(self).attr('data-typeahead'))) {
-                        $(self).on('save', function(e, params){
-                            return e;
-                            try{
-                                if('undefined' == typeof params.submitValue || !params.submitValue || 0==params.submitValue.length) {
-                                    return;
-                                }
-                                if($.parseJSON($(self).attr('data-typeahead'))){
-                                    var local = $(self).data('typeahead').local;
-                                    for(i in local) {
-                                        var item = local[i];
-                                        if(item.value == params.submitValue) {
-                                            setTimeout(function(){ $(self).text(item.tokens + ' (' + item.value + ') '); }, 100);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }catch(e){console.error(e)}
-                        });
-                    }
-                });
-JAVASCRIPT
-)->setType('application/javascript')->end();
-        $builder->end();
-
-        $html = (string) $builder;
+        $html = (string) $this->builder;
 
         $response = new EditableResponse(200, $html);
 
         if($and_destroy){
             $this->existed_dom_type = [];
             $this->data = [];
+            $this->builder = null;
         }
         return $response;
     }
