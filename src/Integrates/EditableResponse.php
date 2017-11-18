@@ -21,8 +21,12 @@ class EditableResponse implements ResponseInterface {
      */
     public function __construct($status_code = null, $body = null)
     {
-        if ($status_code !== null) $this->status_code = $status_code;
-        if ($body !== null) $this->body = $body;
+        if ($status_code !== null) {
+            $this->status_code = $status_code;
+        }
+        if ($body !== null) {
+            $this->body = $body;
+        }
     }
     
 
