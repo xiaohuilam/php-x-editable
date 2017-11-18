@@ -369,7 +369,7 @@ class Editable implements Interfaces\EditableInterface{
     /**
      * 尾部JS
      * 
-     * @return int
+     * @return  self
      */
     public function __script()
     {
