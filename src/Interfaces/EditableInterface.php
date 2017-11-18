@@ -1,7 +1,7 @@
 <?php
 namespace Editable\Interfaces;
 
-interface EditableInterface{
+interface EditableInterface {
 
     /**
      * 登记输入框

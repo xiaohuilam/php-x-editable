@@ -100,8 +100,9 @@ class Editable implements Interfaces\EditableInterface{
      */
     public function __construct($row = null, $pk = "id", $hidden = [], $ajax = '')
     {
-        if(!$row)
-            throw new EditableException(null, EditableException::NO_DATA);
+        if(!$row) {
+                    throw new EditableException(null, EditableException::NO_DATA);
+        }
 
         $this->row      = $row;
         $this->pk       = isset($this->row[$pk]) ? $this->row[$pk] : null;
@@ -110,11 +111,13 @@ class Editable implements Interfaces\EditableInterface{
 
         $this->hidden[$pk]   = 1;
 
-        if(class_exists('\Editable\Assets\LocalAssets'))
-            $this->vendor_assets = \Editable\Assets\LocalAssets::instance()->getVendorAssetsRoutingUrl();
+        if(class_exists('\Editable\Assets\LocalAssets')) {
+                    $this->vendor_assets = \Editable\Assets\LocalAssets::instance()->getVendorAssetsRoutingUrl();
+        }
 
-        foreach($this->row as $key => $value)
-            $this->input($key, $value);
+        foreach($this->row as $key => $value) {
+                    $this->input($key, $value);
+        }
     }
     
 
@@ -140,13 +143,13 @@ class Editable implements Interfaces\EditableInterface{
      */
     public function protect($key)
     {
-        if(is_array($key))
-            foreach($key as $each) {
+        if(is_array($key)) {
+                    foreach($key as $each) {
                 $this->protect($each);
-            }
-
-        else
-            $this->hidden[$key] = 1;
+        }
+            } else {
+                    $this->hidden[$key] = 1;
+        }
 
         return $this;
     }
@@ -289,7 +292,9 @@ class Editable implements Interfaces\EditableInterface{
         }
         $value  = $each[2];
         $show_name = ucfirst(preg_replace_callback('/(_([a-zA-Z0-9]))/', function($a) {
-            if(isset($a[2])) return ' '.strtoupper($a[2]);
+            if(isset($a[2])) {
+                return ' '.strtoupper($a[2]);
+            }
             return $a;
         }, $key));
         $title  = 'Type the '.$show_name;
@@ -309,7 +314,7 @@ class Editable implements Interfaces\EditableInterface{
             } else if(is_string($each[3])) {
 
             }
-        }else if($type == 'typeaheadjs') {
+        } else if($type == 'typeaheadjs') {
             $show_value = '';
             foreach($each[3] as $option) {
                 $option_value = isset($option['value']) ? $option['value']: null;
@@ -318,9 +323,9 @@ class Editable implements Interfaces\EditableInterface{
                     break;
                 }
             }
-        }else if($type == 'wysiwyg') {
+        } else if($type == 'wysiwyg') {
             $show_type = 'wysihtml5';
-        }else if($type == 'tag') {
+        } else if($type == 'tag') {
             $show_type = 'select2';
         }
 
@@ -341,19 +346,19 @@ class Editable implements Interfaces\EditableInterface{
         /**//**//**/}
         /**//**//**/if($type == 'select' || $type == 'tag' || $type == 'checklist') {
         /**//**//**//**/$this->builder->setDataSource(is_string($each[3])?$each[3]:json_encode($each[3]));
-        /**//**//**/}else if($type == 'typeaheadjs') {
+        /**//**//**/} else if($type == 'typeaheadjs') {
         /**//**//**//**/$this->builder->setDataTypeahead( # @todo: template
         /**//**//**//**//**/json_encode([
         /**//**//**//**//**/'name' => $key,
         /**//**//**//**//**/'local' => $each[3],
         /**//**//**//**//**/])
         /**//**//**//**/);
-        /**//**//**/}else if($type == 'date') {
+        /**//**//**/} else if($type == 'date') {
         /**//**//**//**/$this->builder->setDataType('combodate')
         /**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD')
         /**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD')
         /**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD');
-        /**//**//**/}else if($type == 'datetime') {
+        /**//**//**/} else if($type == 'datetime') {
         /**//**//**//**/$this->builder->setDataType('combodate')
         /**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD HH:mm:ss')
         /**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD HH:mm:ss')
