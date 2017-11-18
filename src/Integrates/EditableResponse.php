@@ -35,10 +35,10 @@ class EditableResponse implements ResponseInterface{
      *
      * @return int
      */
-	public function getStatusCode()
-	{
-		return $this->status_code;
-	}
+    public function getStatusCode()
+    {
+        return $this->status_code;
+    }
 
 
     /**

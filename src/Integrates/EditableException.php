@@ -10,8 +10,9 @@ class EditableException extends \Exception{
 
     public function __construct($message = null, $code, $previous = null)
     {
-        if($message === null)
-            $message = self::$messages[$code];
+        if($message === null) {
+                    $message = self::$messages[$code];
+        }
 
         call_user_func_array([parent::class, __FUNCTION__], func_get_args());
     }

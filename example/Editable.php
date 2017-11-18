@@ -1,7 +1,7 @@
 <?php
 namespace Editable\Example;
 
-class Editable{
+class Editable {
     public static function test() {
         $editable = new \Editable\Editable(
             [
