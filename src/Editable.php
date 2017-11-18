@@ -5,7 +5,7 @@ use Editable\Integrates\EditableResponse;
 use Editable\Integrates\EditableException;
 use AvpLab\PhpHtmlBuilder;
 
-class Editable implements Interfaces\EditableInterface{
+class Editable implements Interfaces\EditableInterface {
     /**
      * @var array 已声明使用的类型, 用于加载JS
      */
@@ -100,7 +100,7 @@ class Editable implements Interfaces\EditableInterface{
      */
     public function __construct($row = null, $pk = "id", $hidden = [], $ajax = '')
     {
-        if(!$row) {
+        if (!$row) {
                     throw new EditableException(null, EditableException::NO_DATA);
         }
 
@@ -109,13 +109,13 @@ class Editable implements Interfaces\EditableInterface{
         $this->hidden   = array_flip($hidden);
         $this->ajax     = $ajax;
 
-        $this->hidden[$pk]   = 1;
+        $this->hidden[$pk] = 1;
 
-        if(class_exists('\Editable\Assets\LocalAssets')) {
+        if (class_exists('\Editable\Assets\LocalAssets')) {
                     $this->vendor_assets = \Editable\Assets\LocalAssets::instance()->getVendorAssetsRoutingUrl();
         }
 
-        foreach($this->row as $key => $value) {
+        foreach ($this->row as $key => $value) {
                     $this->input($key, $value);
         }
     }
@@ -143,8 +143,8 @@ class Editable implements Interfaces\EditableInterface{
      */
     public function protect($key)
     {
-        if(is_array($key)) {
-                    foreach($key as $each) {
+        if (is_array($key)) {
+                    foreach ($key as $each) {
                 $this->protect($each);
         }
             } else {
@@ -287,45 +287,45 @@ class Editable implements Interfaces\EditableInterface{
 
         $type   = $each[0];
         $key    = $each[1];
-        if($each[2] === null && isset($this->row[$key]) && $this->row[$key] != null) {
+        if ($each[2] === null && isset($this->row[$key]) && $this->row[$key] != null) {
             $each[2] = $this->row[$key];
         }
-        $value  = $each[2];
+        $value = $each[2];
         $show_name = ucfirst(preg_replace_callback('/(_([a-zA-Z0-9]))/', function($a) {
-            if(isset($a[2])) {
+            if (isset($a[2])) {
                 return ' '.strtoupper($a[2]);
             }
             return $a;
         }, $key));
-        $title  = 'Type the '.$show_name;
+        $title = 'Type the '.$show_name;
         $show_type = $type;
 
         $show_value = $value;
-        if($type == 'select') {
+        if ($type == 'select') {
             $show_value = '';
-            if(is_array($each[3])) {
-                foreach($each[3] as $option) {
-                    $option_value = isset($option['value']) ? $option['value']: null;
-                    if($value == $option_value) {
+            if (is_array($each[3])) {
+                foreach ($each[3] as $option) {
+                    $option_value = isset($option['value']) ? $option['value'] : null;
+                    if ($value == $option_value) {
                         $show_value = $option['text'];
                         break;
                     }
                 }
-            } else if(is_string($each[3])) {
+            } else if (is_string($each[3])) {
 
             }
-        } else if($type == 'typeaheadjs') {
+        } else if ($type == 'typeaheadjs') {
             $show_value = '';
-            foreach($each[3] as $option) {
-                $option_value = isset($option['value']) ? $option['value']: null;
-                if($value == $option_value) {
-                    $show_value = $option['text'] . ' (' . $value . ') ';
+            foreach ($each[3] as $option) {
+                $option_value = isset($option['value']) ? $option['value'] : null;
+                if ($value == $option_value) {
+                    $show_value = $option['text'].' ('.$value.') ';
                     break;
                 }
             }
-        } else if($type == 'wysiwyg') {
+        } else if ($type == 'wysiwyg') {
             $show_type = 'wysihtml5';
-        } else if($type == 'tag') {
+        } else if ($type == 'tag') {
             $show_type = 'select2';
         }
 
@@ -341,24 +341,24 @@ class Editable implements Interfaces\EditableInterface{
         /**//**//**/->setDataType($show_type)
         /**//**//**/->setDataValue($value)
         /**//**//**/->setDataPlacement('bottom');
-        /**//**//**/if(!isset($this->hidden[$key])) {
+        /**//**//**/if (!isset($this->hidden[$key])) {
         /**//**//**//**/$this->builder->setClass('editable-link');
         /**//**//**/}
-        /**//**//**/if($type == 'select' || $type == 'tag' || $type == 'checklist') {
-        /**//**//**//**/$this->builder->setDataSource(is_string($each[3])?$each[3]:json_encode($each[3]));
-        /**//**//**/} else if($type == 'typeaheadjs') {
+        /**//**//**/if ($type == 'select' || $type == 'tag' || $type == 'checklist') {
+        /**//**//**//**/$this->builder->setDataSource(is_string($each[3]) ? $each[3] : json_encode($each[3]));
+        /**//**//**/} else if ($type == 'typeaheadjs') {
         /**//**//**//**/$this->builder->setDataTypeahead( # @todo: template
         /**//**//**//**//**/json_encode([
         /**//**//**//**//**/'name' => $key,
         /**//**//**//**//**/'local' => $each[3],
         /**//**//**//**//**/])
         /**//**//**//**/);
-        /**//**//**/} else if($type == 'date') {
+        /**//**//**/} else if ($type == 'date') {
         /**//**//**//**/$this->builder->setDataType('combodate')
         /**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD')
         /**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD')
         /**//**//**//**//**//**/->setDataViewformat('YYYY-MM-DD');
-        /**//**//**/} else if($type == 'datetime') {
+        /**//**//**/} else if ($type == 'datetime') {
         /**//**//**//**/$this->builder->setDataType('combodate')
         /**//**//**//**//**//**/->setDataTemplate('YYYY/MM/DD HH:mm:ss')
         /**//**//**//**//**//**/->setDataFormat('YYYY-MM-DD HH:mm:ss')
@@ -479,8 +479,8 @@ JAVASCRIPT
         $this->builder->div()->setClass('table-wrapper')->setId('table-wrapper-'.$this->uuid);
         /**/$this->builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][0])->end();
         /**/$this->builder->link()->setRel('stylesheet')->setHref($this->vendor_assets['xeditable']['css'][1])->end();
-        foreach($this->existed_dom_type as $dom_type => $one) {
-            foreach($this->vendor_assets[$dom_type]['css'] as $css) {
+        foreach ($this->existed_dom_type as $dom_type => $one) {
+            foreach ($this->vendor_assets[$dom_type]['css'] as $css) {
         /**/$this->builder->link()->setRel('stylesheet')->setHref($css)->end();
             }
         }
@@ -493,7 +493,7 @@ JAVASCRIPT
         /**//**/$this->builder->end();
         /**//**/$this->builder->tbody();
 
-        foreach($this->data as $component) {
+        foreach ($this->data as $component) {
             $this->__every_element($component);
         }
 
@@ -504,8 +504,8 @@ JAVASCRIPT
         /**/$this->builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][1])->end();
         /**/$this->builder->script()->setType('application/javascript')->setSrc($this->vendor_assets['xeditable']['js'][2])->end();
 
-        foreach($this->existed_dom_type as $dom_type => $one) {
-            foreach($this->vendor_assets[$dom_type]['js'] as $js) {
+        foreach ($this->existed_dom_type as $dom_type => $one) {
+            foreach ($this->vendor_assets[$dom_type]['js'] as $js) {
         /**/$this->builder->script()->setType('application/javascript')->setSrc($js)->end();
             }
         }
@@ -516,7 +516,7 @@ JAVASCRIPT
 
         $response = new EditableResponse(200, $html);
 
-        if($and_destroy){
+        if ($and_destroy) {
             $this->existed_dom_type = [];
             $this->data = [];
             $this->builder = null;

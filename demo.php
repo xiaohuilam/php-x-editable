@@ -2,16 +2,16 @@
 require 'vendor/autoload.php';
 
 if ('save' == ($_GET['action'] ?? null)) {
-	echo 'OK'; exit;
+    echo 'OK'; exit;
 } else if ('marriage' == ($_GET['action'] ?? null)) {
-	$groups = array(
-	  array('value' => 0, 'text' => 'Unmarried 未婚'),
-	  array('value' => 1, 'text' => 'Marriaged 已婚'),
-	  array('value' => 2, 'text' => 'Divorced 离异'),
-	  array('value' => 3, 'text' => 'Widowed 丧偶'),
-	);
-	echo json_encode($groups);  
-	exit;
+    $groups = array(
+        array('value' => 0, 'text' => 'Unmarried 未婚'),
+        array('value' => 1, 'text' => 'Marriaged 已婚'),
+        array('value' => 2, 'text' => 'Divorced 离异'),
+        array('value' => 3, 'text' => 'Widowed 丧偶'),
+    );
+    echo json_encode($groups);  
+    exit;
 }
 ?>
 <!DOCTYPE html>
