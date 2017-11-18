@@ -11,7 +11,7 @@ Maybe the best X-Editable PHP plugin of the world. 如果你是中文用户，�
 [![open-issue.png](https://img.shields.io/github/issues/xiaohuilam/php-x-editable.svg?style=flat-square)](https://github.com/xiaohuilam/php-x-editable/issues) 
 [![open-pull-request.png](https://img.shields.io/github/issues-pr/xiaohuilam/php-x-editable.svg?style=flat-square)](https://github.com/xiaohuilam/php-x-editable/pulls) 
 [![last-commit.png](https://img.shields.io/github/last-commit/xiaohuilam/php-x-editable.svg?style=flat-square)](https://github.com/xiaohuilam/php-x-editable/commits) 
-[![contributors.png](https://img.shields.io/github/contributors/xiaohuilam/php-x-editabl.svg?style=flat-square)](https://github.com/xiaohuilam/php-x-editable/graphs/contributors)
+[![contributors.png](https://img.shields.io/github/contributors/xiaohuilam/php-x-editable.svg?style=flat-square)](https://github.com/xiaohuilam/php-x-editable/graphs/contributors)
 
 
 ## Install
