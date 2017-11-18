@@ -1,7 +1,7 @@
 <?php
 namespace Editable\Integrates;
 
-class EditableException extends \Exception{
+class EditableException extends \Exception {
     const NO_DATA = -1;
 
     static $messages = [
@@ -10,7 +10,7 @@ class EditableException extends \Exception{
 
     public function __construct($message = null, $code, $previous = null)
     {
-        if($message === null) {
+        if ($message === null) {
                     $message = self::$messages[$code];
         }
 
